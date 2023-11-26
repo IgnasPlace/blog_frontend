@@ -1,0 +1,24 @@
+.profile {
+  display: flex;
+  justify-content: space-between;
+  gap: $small;
+  color: $color-dark;
+
+  img {
+    height: $xl3;
+    width: $xl3;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .nameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  h3 {
+    margin-bottom: $xsmall;
+  }
+  span {
+    font-size: $text-small;
+  }
+}

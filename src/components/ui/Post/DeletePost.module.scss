@@ -1,0 +1,13 @@
+.deleteContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $small;
+  margin-top: $small;
+  h3 {
+    color: $color-primary;
+  }
+  .actions {
+    display: flex;
+    gap: $small;
+  }
+}

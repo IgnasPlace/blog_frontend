@@ -1,0 +1,76 @@
+.mainContent {
+  h2 {
+    font-size: $text-large;
+    text-transform: capitalize;
+    margin: $small 0 $large 0;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid $color-primary;
+    opacity: 0.1;
+  }
+  p {
+    white-space: pre-wrap;
+    margin-bottom: $large;
+    margin-top: $large;
+  }
+}
+
+.userId,
+.edited {
+  display: block;
+  font-size: $text-small;
+  text-align: end;
+}
+.userId {
+  font-style: italic;
+}
+.edited {
+  color: $color-dark3;
+}
+
+.actions {
+  display: flex;
+  justify-content: end;
+  gap: $small;
+  margin: $small 0 0 0;
+
+  button {
+    display: flex;
+    border: 0;
+    padding: $small;
+    cursor: pointer;
+    background-color: $color-light-1;
+    border-radius: 50%;
+    transition-duration: 0.2s;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
+
+    &:hover {
+      border: 1px solid rgba(176, 176, 176, 0.5);
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+        0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+  }
+  .actionsEdit {
+    &:hover,
+    &:active {
+      background-color: $color-dark3;
+      color: $color-light-1;
+    }
+  }
+  .actionsDelete {
+    &:hover,
+    &:active {
+      background-color: $color-delete;
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  .mainContent {
+    h2 {
+      font-size: $text-2xl;
+    }
+  }
+}
