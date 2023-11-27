@@ -24,8 +24,12 @@ const PostContent = (props: Props) => {
     setDeleteViewOpened(false);
     setDeleting(true);
     // send http delete request to the server
-    await fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`, {
+    await fetch(`http://localhost:5001/api/v1/posts/${post.id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: user?.id }),
     })
       .then((res) => {
         // if request succesfull - remove it from the store
@@ -83,10 +87,10 @@ const PostContent = (props: Props) => {
         <p>{post.body}</p>
       </article>
       <div>
-        <span className={styles.userId}>Created by user: {post.userId}</span>
-        {post.edited && <span className={styles.edited}>Edited</span>}
+        <span className={styles.userId}>Created by user: {post.user_id}</span>
+        {post.edited_on && <span className={styles.edited}>Edited</span>}
       </div>
-      {user && user.id === post.userId && actionsContent}
+      {user && user.id === post.user_id && actionsContent}
     </>
   );
 };

@@ -17,7 +17,7 @@ const Posts = () => {
     const updatePostsHandler = async function (): Promise<void> {
       setLoading(true);
 
-      await fetch("https://jsonplaceholder.typicode.com/posts")
+      await fetch("http://localhost:5001/api/v1/posts/")
         .then((res) => res.json())
         .then((data) => {
           if (data.length > 0) {

@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import AnonymousRoute from "./AnonymousRoute";
+import CreatePost from "../components/ui/Post/CreatePost";
 
 const Router = () => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -15,6 +16,7 @@ const Router = () => {
       <Routes>
         <Route element={<ProtectedRoute user={user} redirectPath="/login" />}>
           <Route path="/" element={<Posts />} />
+          <Route path="/create-post" element={<CreatePost />} />
         </Route>
         <Route element={<AnonymousRoute user={user} redirectPath="/" />}>
           <Route path="/login" element={<Login />} />

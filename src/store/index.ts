@@ -3,10 +3,16 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export type PostType = {
   id: number;
+  user_id: number;
+  title: string;
+  body: string;
+  edited_on?: string;
+};
+export type NewPostType = {
   userId: number;
   title: string;
   body: string;
-  edited?: boolean;
+  createdAt: string;
 };
 export type UserType = {
   id: number;
@@ -28,7 +34,7 @@ const initialPostsState: PostsState = {
 };
 const initialUserState: CurrentUser = {
   user: {
-    id: 1,
+    id: 2,
     name: "Ignas",
     lastName: "Jareckas",
     position: "Front-end developer",

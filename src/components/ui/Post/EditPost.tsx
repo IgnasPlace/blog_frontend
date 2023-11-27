@@ -39,16 +39,21 @@ const EditPost = (props: Props) => {
   const EditPostHandler = async (updatedPost: PostType) => {
     setUpdating(true);
     // send http delete request to the server
-    await fetch(
-      `https://jsonplaceholder.typicode.com/posts/${updatedPost.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedPost),
-      }
-    )
+    const dataToUpdate = {
+      id: updatedPost.id,
+      userId: updatedPost.user_id,
+      title: updatedPost.title,
+      body: updatedPost.body,
+      updatedAt: new Date(Date.now()).toISOString(),
+    };
+
+    await fetch(`http://localhost:5001/api/v1/posts/${updatedPost.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToUpdate),
+    })
       .then((res) => {
         // if request succesfull - remove it from store
         if (res.ok) {
@@ -74,7 +79,6 @@ const EditPost = (props: Props) => {
         ...props.post,
         title: titleInput.trim(),
         body: bodyInput.trim(),
-        edited: true,
       });
     } else {
       if (!formFailed) {

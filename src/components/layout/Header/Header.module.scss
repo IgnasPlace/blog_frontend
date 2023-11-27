@@ -17,9 +17,13 @@ header {
     .logo {
       margin: $xsmall;
       height: 2rem;
-      img {
-        height: 2rem;
-      }
+      color: $color-light-1;
+      display: flex;
+      align-items: center;
+      letter-spacing: $xsmall;
+      // img {
+      //   height: 2rem;
+      // }
     }
 
     nav {
@@ -27,7 +31,7 @@ header {
       color: $color-primary;
       display: flex;
       align-items: center;
-      gap: $small;
+      gap: $medium;
 
       a,
       button {

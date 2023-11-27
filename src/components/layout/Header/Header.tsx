@@ -13,12 +13,19 @@ const Header = ({ user }: HeaderProps) => {
       <div className={styles.headerInner}>
         <Link to="/">
           <div className={styles.logo}>
-            <img src="Cleverpy-192x192.png" alt="Company logo" />
+            {/* <img src="Cleverpy-192x192.png" alt="Company logo" /> */}
+            logo.
           </div>
         </Link>
         <nav>
           {user && (
             <>
+              <NavLink
+                to="/create-post"
+                className={({ isActive }) => (isActive ? styles.active : "")}
+              >
+                Create Post
+              </NavLink>
               <NavLink
                 to="/"
                 className={({ isActive }) => (isActive ? styles.active : "")}
