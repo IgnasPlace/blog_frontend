@@ -16,7 +16,7 @@ const Router = () => {
       <Routes>
         <Route element={<ProtectedRoute user={user} redirectPath="/login" />}>
           <Route path="/" element={<Posts />} />
-          <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/create-post" element={<CreatePost user={user} />} />
         </Route>
         <Route element={<AnonymousRoute user={user} redirectPath="/" />}>
           <Route path="/login" element={<Login />} />

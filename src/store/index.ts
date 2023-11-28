@@ -34,7 +34,7 @@ const initialPostsState: PostsState = {
 };
 const initialUserState: CurrentUser = {
   user: {
-    id: 2,
+    id: 4,
     name: "Ignas",
     lastName: "Jareckas",
     position: "Front-end developer",

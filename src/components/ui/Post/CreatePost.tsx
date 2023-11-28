@@ -2,12 +2,16 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import styles from "./CreatePost.module.scss";
-import { NewPostType } from "../../../store";
+import { NewPostType, UserType } from "../../../store";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Loading from "../Loading/Loading";
 // import { useDispatch } from "react-redux";
 
-const CreatePost = () => {
+type Props = {
+  user: UserType;
+};
+
+const CreatePost = ({ user }: Props) => {
   const [titleInput, setTitleInput] = useState("");
   const [bodyInput, setBodyInput] = useState("");
   const [formFailed, setFormFailed] = useState(false);
@@ -51,7 +55,9 @@ const CreatePost = () => {
       .then(() => {
         navigate("/");
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error);
+      })
       .finally(() => {
         setUpdating(false);
         // props.closeEditView();
@@ -67,7 +73,7 @@ const CreatePost = () => {
   const onSavePostHandler = () => {
     if (titleInput && bodyInput) {
       CreatePostHandler({
-        userId: 2,
+        userId: user.id,
         title: titleInput.trim(),
         body: bodyInput.trim(),
         createdAt: new Date(Date.now()).toISOString(),
