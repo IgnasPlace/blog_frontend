@@ -47,4 +47,8 @@
     display: flex;
     gap: $small;
   }
+  .updateFailed {
+    margin-top: 1rem;
+    color: $color-primary;
+  }
 }

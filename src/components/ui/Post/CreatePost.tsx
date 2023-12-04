@@ -2,20 +2,20 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import styles from "./CreatePost.module.scss";
-import { NewPostType, UserType } from "../../../store";
+import { NewPostType, UserType } from "../../../store/types";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Loading from "../Loading/Loading";
 // import { useDispatch } from "react-redux";
 
 type Props = {
-  user: UserType;
+  user: UserType | null;
 };
 
 const CreatePost = ({ user }: Props) => {
   const [titleInput, setTitleInput] = useState("");
   const [bodyInput, setBodyInput] = useState("");
   const [formFailed, setFormFailed] = useState(false);
-  const [updating, setUpdating] = useState(false);
+  const [creating, setCreating] = useState(false);
   // const [bodyInputHeigth, setBodyInputHeigth] = useState("10rem");
 
   const navigate = useNavigate();
@@ -34,17 +34,16 @@ const CreatePost = ({ user }: Props) => {
   // const dispatch = useDispatch();
 
   const CreatePostHandler = async (updatedPost: NewPostType) => {
-    setUpdating(true);
-    // send http delete request to the server
-    await fetch(`http://localhost:5001/api/v1/posts/`, {
+    setCreating(true);
+    await fetch(`${import.meta.env.VITE_API_URL}/api/v1/posts/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(updatedPost),
     })
       .then((res) => {
-        // if request succesfull - remove it from store
         if (res.ok) {
           setTitleInput("");
           setBodyInput("");
@@ -59,7 +58,7 @@ const CreatePost = ({ user }: Props) => {
         console.log(error);
       })
       .finally(() => {
-        setUpdating(false);
+        setCreating(false);
         // props.closeEditView();
       });
   };
@@ -71,9 +70,8 @@ const CreatePost = ({ user }: Props) => {
   };
 
   const onSavePostHandler = () => {
-    if (titleInput && bodyInput) {
+    if (titleInput && bodyInput && user) {
       CreatePostHandler({
-        userId: user.id,
         title: titleInput.trim(),
         body: bodyInput.trim(),
         createdAt: new Date(Date.now()).toISOString(),
@@ -153,7 +151,7 @@ const CreatePost = ({ user }: Props) => {
                 Please add the content
               </m.span>
             </div>
-            {updating ? (
+            {creating ? (
               <h2>
                 Creating... <Loading />
               </h2>

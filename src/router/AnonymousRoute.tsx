@@ -1,4 +1,4 @@
-import { UserType } from "../store";
+import { UserType } from "../store/types";
 import { Navigate, Outlet } from "react-router-dom";
 
 type PropsType = {

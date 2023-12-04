@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import Button from "../Button/Button";
 import styles from "./EditPost.module.scss";
-import { PostType, postsActions } from "../../../store";
+import { postsActions } from "../../../store";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Loading from "../Loading/Loading";
 import { useDispatch } from "react-redux";
+import { PostType } from "../../../store/types";
 
 type Props = {
   title: string;
@@ -17,6 +18,7 @@ const EditPost = (props: Props) => {
   const [bodyInput, setBodyInput] = useState("");
   const [formFailed, setFormFailed] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [updateFailed, setUpdateFailed] = useState("");
   const [bodyInputHeigth, setBodyInputHeigth] = useState("10rem");
 
   const bodyInputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -37,33 +39,47 @@ const EditPost = (props: Props) => {
   const dispatch = useDispatch();
 
   const EditPostHandler = async (updatedPost: PostType) => {
+    setUpdateFailed("");
     setUpdating(true);
     // send http delete request to the server
     const dataToUpdate = {
-      id: updatedPost.id,
-      userId: updatedPost.user_id,
+      // id: updatedPost.id,
+      // user_id: updatedPost.user_id,
       title: updatedPost.title,
       body: updatedPost.body,
-      updatedAt: new Date(Date.now()).toISOString(),
+      updated_on: new Date(Date.now()).toISOString(),
     };
 
-    await fetch(`http://localhost:5001/api/v1/posts/${updatedPost.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToUpdate),
-    })
+    await fetch(
+      `${import.meta.env.VITE_API_URL}/api/v1/posts/${updatedPost.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(dataToUpdate),
+      }
+    )
       .then((res) => {
-        // if request succesfull - remove it from store
         if (res.ok) {
-          dispatch(postsActions.updatePost(updatedPost));
+          dispatch(
+            postsActions.updatePost({
+              ...updatedPost,
+              updated_on: dataToUpdate.updated_on,
+            })
+          );
+          props.closeEditView();
+        } else {
+          throw "Failed to update. Please try again later.";
         }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        setUpdateFailed(error);
+        console.log(error);
+      })
       .finally(() => {
         setUpdating(false);
-        props.closeEditView();
       });
   };
 
@@ -172,6 +188,9 @@ const EditPost = (props: Props) => {
               />
             </div>
           )}
+          {updateFailed ? (
+            <h4 className={styles.updateFailed}>{updateFailed}</h4>
+          ) : null}
         </form>
       </m.div>
     </LazyMotion>

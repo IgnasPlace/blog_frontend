@@ -1,45 +1,12 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { CurrentUserType, PostType, PostsStateType, UserType } from "./types";
 
-export type PostType = {
-  id: number;
-  user_id: number;
-  title: string;
-  body: string;
-  edited_on?: string;
-};
-export type NewPostType = {
-  userId: number;
-  title: string;
-  body: string;
-  createdAt: string;
-};
-export type UserType = {
-  id: number;
-  name: string;
-  lastName: string;
-  position: string;
-};
-
-type PostsState = {
-  posts: PostType[];
-};
-
-type CurrentUser = {
-  user: UserType | null;
-};
-
-const initialPostsState: PostsState = {
+const initialPostsState: PostsStateType = {
   posts: [],
 };
-const initialUserState: CurrentUser = {
-  user: {
-    id: 4,
-    name: "Ignas",
-    lastName: "Jareckas",
-    position: "Front-end developer",
-  },
-  // user: null
+const initialUserState: CurrentUserType = {
+  user: null,
 };
 
 const postsSlice = createSlice({
@@ -66,7 +33,9 @@ const userSlice = createSlice({
   initialState: initialUserState,
   reducers: {
     login: (state, action: PayloadAction<UserType | null>) => {
-      state.user = action.payload;
+      if (action.payload !== null) {
+        state.user = action.payload;
+      }
     },
     logout: (state) => {
       state.user = null;

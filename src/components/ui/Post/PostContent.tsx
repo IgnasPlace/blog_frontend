@@ -1,10 +1,11 @@
-import { PostType, UserType, postsActions } from "../../../store";
+import { postsActions } from "../../../store";
 import { MdDeleteOutline, MdOutlineModeEditOutline } from "react-icons/md";
 import styles from "./PostContent.module.scss";
 import DeletePost from "./DeletePost";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Loading from "../Loading/Loading";
+import { PostType, UserType } from "../../../store/types";
 
 type Props = {
   post: PostType;
@@ -24,11 +25,12 @@ const PostContent = (props: Props) => {
     setDeleteViewOpened(false);
     setDeleting(true);
     // send http delete request to the server
-    await fetch(`http://localhost:5001/api/v1/posts/${post.id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/v1/posts/${post.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ userId: user?.id }),
     })
       .then((res) => {
@@ -87,8 +89,12 @@ const PostContent = (props: Props) => {
         <p>{post.body}</p>
       </article>
       <div>
-        <span className={styles.userId}>Created by user: {post.user_id}</span>
-        {post.edited_on && <span className={styles.edited}>Edited</span>}
+        <span className={styles.userId}>Author: {post.user_name}</span>
+        {post.updated_on && (
+          <span className={styles.edited}>
+            Edited on {post.updated_on.substring(0, 10)}
+          </span>
+        )}
       </div>
       {user && user.id === post.user_id && actionsContent}
     </>

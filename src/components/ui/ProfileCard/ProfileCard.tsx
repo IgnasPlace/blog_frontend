@@ -11,11 +11,15 @@ const ProfileCard = () => {
         <span>No user found</span>
       ) : (
         <div className={styles.profile}>
-          <img src="/profile_small.png" alt={`Profile picture of user`} />
+          <img
+            src={user ? user.picture : ""}
+            alt={user.picture}
+            referrerPolicy="no-referrer"
+          />
           <div className={styles.nameContainer}>
             <h3>{user.name}</h3>
-            <span>{user.position}</span>
-            <span>UserId: {user.id}</span>
+            {/* <span>{user.position}</span>
+            <span>UserId: {user.id}</span> */}
           </div>
         </div>
       )}

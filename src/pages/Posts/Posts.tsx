@@ -17,7 +17,9 @@ const Posts = () => {
     const updatePostsHandler = async function (): Promise<void> {
       setLoading(true);
 
-      await fetch("http://localhost:5001/api/v1/posts/")
+      await fetch(`${import.meta.env.VITE_API_URL}/api/v1/posts/`, {
+        credentials: "include",
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.length > 0) {

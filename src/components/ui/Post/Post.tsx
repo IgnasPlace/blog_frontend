@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { PostType, RootState } from "../../../store";
+import { RootState } from "../../../store";
+import { PostType } from "../../../store/types";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Card from "../Card/Card";
 import EditPost from "./EditPost";

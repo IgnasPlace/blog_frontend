@@ -8,6 +8,11 @@ type HeaderProps = { user: UserType | null };
 const Header = ({ user }: HeaderProps) => {
   const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    window.open(`${import.meta.env.VITE_API_URL}/auth/logout`, "_self");
+    dispatch(userActions.logout());
+  };
+
   return (
     <header>
       <div className={styles.headerInner}>
@@ -21,20 +26,25 @@ const Header = ({ user }: HeaderProps) => {
           {user && (
             <>
               <NavLink
+                to="/"
+                className={({ isActive }) => (isActive ? styles.active : "")}
+              >
+                All Posts
+              </NavLink>
+              <NavLink
+                to="/my-posts"
+                className={({ isActive }) => (isActive ? styles.active : "")}
+              >
+                My Posts
+              </NavLink>
+              <NavLink
                 to="/create-post"
                 className={({ isActive }) => (isActive ? styles.active : "")}
               >
                 Create Post
               </NavLink>
-              <NavLink
-                to="/"
-                className={({ isActive }) => (isActive ? styles.active : "")}
-              >
-                Posts
-              </NavLink>
-              <button onClick={() => dispatch(userActions.logout())}>
-                Logout
-              </button>
+
+              <button onClick={handleLogout}>Logout</button>
             </>
           )}
         </nav>
