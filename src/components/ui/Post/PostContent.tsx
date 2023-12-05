@@ -31,7 +31,7 @@ const PostContent = (props: Props) => {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ userId: user?.id }),
+      // body: JSON.stringify({ userId: user?.id }),
     })
       .then((res) => {
         // if request succesfull - remove it from the store

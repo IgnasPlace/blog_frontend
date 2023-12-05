@@ -33,7 +33,7 @@ const CreatePost = ({ user }: Props) => {
 
   // const dispatch = useDispatch();
 
-  const CreatePostHandler = async (updatedPost: NewPostType) => {
+  const CreatePostHandler = async (newPost: NewPostType) => {
     setCreating(true);
     await fetch(`${import.meta.env.VITE_API_URL}/api/v1/posts/`, {
       method: "POST",
@@ -41,13 +41,13 @@ const CreatePost = ({ user }: Props) => {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify(updatedPost),
+      body: JSON.stringify(newPost),
     })
       .then((res) => {
         if (res.ok) {
           setTitleInput("");
           setBodyInput("");
-          // dispatch(postsActions.updatePost(updatedPost));
+          // dispatch(postsActions.updatePost(newPost));
           return res.json();
         }
       })
